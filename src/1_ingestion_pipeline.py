@@ -97,7 +97,7 @@ def main():
     chunks = split_documents(documents)
 
     #3. Embedding and Storing in Vector DB
-    create_vector_store(chunks)
+    vectorstore = create_vector_store(chunks)
 
 
 if __name__ == "__main__":
