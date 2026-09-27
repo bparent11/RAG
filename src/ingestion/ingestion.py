@@ -1,10 +1,16 @@
 from pathlib import Path
+import os
 
 from langchain_core.documents.base import Document
 from langchain_community.document_loaders import TextLoader, PDFPlumberLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaEmbeddings
 from langchain_chroma import Chroma
+from dotenv import load_dotenv
+
+load_dotenv()
+
+persist_dir = os.environ.get("PERSISTENT_DIRECTORY", "db_chroma_db")
 
 def load_resume(docs_path: str = "data/resume") -> list[Document]:
     """
@@ -79,7 +85,7 @@ def create_vector_store(chunks: list[Document], persist_directory: str="db/chrom
 def ingest():
     resume = load_resume()
     chunks = split_resume(resume)
-    create_vector_store(chunks)
+    create_vector_store(chunks=chunks, persist_directory=persist_dir)
 
 
 if __name__ == "__main__":
