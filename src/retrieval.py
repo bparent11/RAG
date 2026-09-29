@@ -62,7 +62,7 @@ def generate_prompt(query: str, relevant_docs: list[Document]) -> str:
     result = model.invoke(messages)
 
     return result
-    
+
 def generation_pipeline(query:str):
     relevants_docs = retrieve_k_similar_docs(
         query=query,
@@ -74,7 +74,6 @@ def generation_pipeline(query:str):
     )
 
     return answer
-
 
 if __name__ == "__main__":
     answer = generation_pipeline(
