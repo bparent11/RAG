@@ -28,3 +28,23 @@ if uploaded_file is not None:
                     
             except requests.exceptions.ConnectionError:
                 st.error("Impossible de contacter l'API. Est-ce que FastAPI est bien lancé ?")
+
+
+# Discuss with RAG system
+chat_input = st.text_input("Discuss with a RAG system", "", type="search")
+if chat_input:
+    query = {"query":chat_input}
+
+    with st.spinner("Réponse en cours de génération ..."):
+        try:
+            response = requests.post("http://127.0.0.1:8000/query", params=query)
+        
+            if response.status_code == 200:
+                st.success("Réponse de l'API")
+                st.text(response.json()["answer"])
+            else:
+                st.error(f"Impossible de générer la réponse. Veuillez réessayer plus tard.")
+        
+        except requests.exceptions.ConnectionError:
+            st.error("Impossible de contacter l'API. Est-ce que FastAPI est bien lancé ?")
+    
